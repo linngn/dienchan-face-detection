@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diện Chẩn AR</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Diện Chẩn AR</h1>
+  <label>Phác đồ
+    <select id="chart" disabled></select>
+  </label>
+  <label>Độ mờ
+    <input id="opacity" type="range" min="0" max="1" step="0.01" value="0.75">
+  </label>
+  <button id="snapshot" type="button" disabled>Chụp ảnh</button>
+  <button id="stop" type="button" disabled>Dừng</button>
+</header>
+
+<main>
+  <div id="stage">
+    <canvas id="view"></canvas>
+    <p id="overlay-message">Đang tải…</p>
+  </div>
+</main>
+
+<footer id="status">khởi động…</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
