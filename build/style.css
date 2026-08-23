@@ -10,14 +10,16 @@
 
 * { box-sizing: border-box; }
 
-html { height: 100%; overflow: hidden; }
+html { height: 100%; }
 
 body {
   margin: 0;
-  /* Fixed height, not min-height: the canvas sizes itself off the stage, so the
-     stage needs a definite height to scale into instead of growing the page. */
-  height: 100dvh;
-  overflow: hidden;
+  /* min-height, not height: at large device font sizes the header wraps onto
+     several rows and the chrome outgrows the viewport. A fixed height would
+     squeeze the stage to nothing with no way to scroll to it. The canvas takes
+     its backing-store size from the video, so growing the page is harmless. */
+  min-height: 100dvh;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   background: var(--bg);
@@ -26,6 +28,7 @@ body {
 }
 
 header {
+  flex: 0 0 auto;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -44,15 +47,17 @@ h1 {
 
 label {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
+  min-width: 0;
   color: var(--muted);
   font-size: 0.85rem;
-  white-space: nowrap;
 }
 
 select, button {
   font: inherit;
+  max-width: 100%;
   color: var(--text);
   background: #262b33;
   border: 1px solid var(--line);
@@ -66,14 +71,16 @@ button:disabled, select:disabled { opacity: 0.45; cursor: default; }
 
 #stop { margin-left: auto; border-color: var(--accent); color: #ffb4ba; }
 
-input[type=range] { width: 130px; accent-color: var(--accent); }
+input[type=range] { width: 130px; max-width: 100%; accent-color: var(--accent); }
 
 main {
-  flex: 1;
+  flex: 1 1 auto;
   display: grid;
   place-items: center;
   padding: 16px;
-  min-height: 0;
+  /* A floor rather than 0: the stage keeps a usable height even when a tall
+     wrapped header has eaten the viewport, and the page scrolls to reach it. */
+  min-height: 45dvh;
 }
 
 #stage {
@@ -114,6 +121,7 @@ canvas.hidden { display: none; }
 #overlay-message.hidden { display: none; }
 
 footer {
+  flex: 0 0 auto;
   padding: 8px 16px;
   border-top: 1px solid var(--line);
   background: var(--panel);
